@@ -23,8 +23,8 @@ module.exports.createCustomer = async (req, res, next) => {
     const addhar = await Customer.findById(customer.title);
     if (addhar) {
       addhar.company.push(customer._id);
-      console.log(addhar.company);
-      console.log(addhar);
+      // console.log(addhar.company);
+      // console.log(addhar);
       await addhar.save();
     }
   }
@@ -67,7 +67,6 @@ module.exports.updateCustomer = async (req, res) => {
   const arrayCompany = camp.company;
   // console.log(arrayCompany);
   for (let i = 0; i < arrayCompany.length; i++) {
-    // console.log("amsn");
     const theCompany = await Customer.findById(arrayCompany[i]);
     if (theCompany) {
       // console.log(arrayCompany[i]);
@@ -78,7 +77,7 @@ module.exports.updateCustomer = async (req, res) => {
         rating: 1,
         author: theCompany.author,
       });
-      console.log(notification);
+      // console.log(notification);
       theCompany.notifications.push(notification);
       // console.log(theCompany);
       await notification.save();

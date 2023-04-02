@@ -5,7 +5,7 @@ module.exports.createNotification = async (req, res) => {
   const customer = await Customer.findById(req.params.id);
   const notification = new Notification(req.body.notification);
   notification.author = req.user._id;
-  console.log(notification);
+  // console.log(notification);
   customer.notifications.push(notification);
   await notification.save();
   await customer.save();
@@ -27,8 +27,8 @@ module.exports.updateNotification = async (req, res) => {
   const { id, notificationID } = req.params;
   const customer = await Customer.findById(id);
   customer.location = req.body.address;
-  console.log(customer.location);
-  console.log(req.body.address);
+  // console.log(customer.location);
+  // console.log(req.body.address);
   await customer.save();
   await Customer.findByIdAndUpdate(id, {
     $pull: { notifications: notificationID },
