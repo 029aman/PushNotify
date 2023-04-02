@@ -26,7 +26,7 @@ const notificationRoutes = require("./routes/notifications");
 const userRoutes = require("./routes/users");
 
 mongoose.set("strictQuery", false);
-mongoose.connect(process.env.DB_URL, {
+mongoose.connect("mongodb+srv://029aman:amanaman@cluster0.oq2hs5f.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
