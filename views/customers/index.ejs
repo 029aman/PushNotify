@@ -1,0 +1,32 @@
+<% layout('./layouts/boilerplate') %>
+<h1>All Customers</h1>
+
+<% for(let customer of customers){ %> <% if(currentUser &&
+customer.author.equals(currentUser._id)) {%>
+<div class="card mb-3">
+  <div class="row">
+    <div class="col-md-4">
+      <img
+        class="img-fluid"
+        alt=""
+        src="<%= customer.images[Math.floor(Math.random()*customer.images.length)].url %> "
+      />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">
+          UID :- <%= customer.title %> <br />
+          A/C :- <%= customer._id %>
+        </h5>
+        <p class="card-text">Info :- <%= customer.description %></p>
+        <p class="card-text">
+              <large class="text-muted"><%= customer.location %> </large>
+        </p>
+        <a class="btn btn-primary" href="/customers/<%= customer._id %>"
+          >View
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %> <% } %>

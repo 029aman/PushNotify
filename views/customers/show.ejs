@@ -1,0 +1,108 @@
+<% layout('./layouts/boilerplate') %>
+<link rel="stylesheet" href="/stylesheets/stars.css" />
+<div class="row">
+  <div class="col-6">
+    <div class="card mb-3">
+      <div id="customerCarousel" class="carousel slide">
+        <div class="carousel-inner">
+          <% customer.images.forEach((img, i)=> { %>
+          <div class="carousel-item <%= i===0 ? 'active':''%>">
+            <img src="<%= img.url %>" class="d-block w-100" alt="" />
+          </div>
+          <% }) %>
+        </div>
+        <% if(customer.images.length> 1) {%>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#customerCarousel"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#customerCarousel"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+        <% } %>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">UID :- <%= customer.title %></h5>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">A/C :- <%= customer._id %></h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-muted"><%= customer.location %></li>
+        <li class="list-group-item text-muted">
+          Account At : <%= customer.author.username %>
+        </li>
+        <li class="list-group-item">Income: $<%= customer.price %>/year</li>
+      </ul>
+      <% if(currentUser && customer.author.equals(currentUser._id)) {%>
+      <div class="card-body">
+        <a
+          href="/customers/<%= customer._id %>/edit"
+          class="card-link btn btn-info"
+          >Edit</a
+        >
+        <form
+          class="d-inline"
+          action="/customers/<%= customer._id %>?_method=DELETE"
+          ,
+          method="POST"
+        >
+          <button class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+      <% } %>
+
+      <div class="card-footer text-muted">
+        <a class="btn btn-primary" href="/customers"
+          ><span class="text-muted">All Customers</span></a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <h2>Notifications</h2>
+    <% if(customer.notifications.length==0) { %> No New Notifications <% } else
+    {%> <% for(let notification of customer.notifications) {%>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">New Address</h5>
+        <p class="card-text">Address: <%= notification.body %></p>
+        <% if(currentUser && notification.author.equals(currentUser._id)) { %>
+        <form
+          action="/customers/<%= customer._id %>/notifications/<%= notification._id %>?_method=PUT"
+          method="POST"
+        >
+          <input
+            type="text"
+            class="form-control"
+            id="address"
+            name="address"
+            aria-label="address"
+            value="<%= notification.body %>"
+            readonly
+          />
+          <button class="btn btn-sm btn-warning mt-1">Update and Delete</button>
+        </form>
+        <form
+          action="/customers/<%= customer._id %>/notifications/<%= notification._id %>?_method=DELETE"
+          method="POST"
+        >
+          <button class="btn btn-sm btn-danger d-inline mt-1">Delete</button>
+        </form>
+        <% } %>
+      </div>
+    </div>
+    <% } %> <% } %>
+  </div>
+</div>
